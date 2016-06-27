@@ -76,12 +76,21 @@ function displayImages() {
   productsArray.splice(productsArray[index[2]],1);
 }
 
-function onClick() {
+function onClick(e) {
   if (totalClicks > 25) {
     console.log('25 data points aquired');
+  } else if (e.target.id === 'container') {
+    console.log('container clicked');
   } else {
     totalClicks++;
     console.log('click number ' + totalClicks);
+    if (e.target.id === 'img1') {
+      console.log('img1 clicked');
+    } else if (e.target.id === 'img2') {
+      console.log('img2 clicked');
+    } else if (e.target.id === 'img3') {
+      console.log('img3 clicked');
+    }
   }
 }
 
