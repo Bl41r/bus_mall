@@ -58,6 +58,14 @@ div {
   text-align: center;
 }
 
+#welcome {
+	z-index: 1;
+	position: fixed;
+	height: 500px;
+	width: 100%;
+	background-color: blue;
+}
+
 .hidden {
 	display: none;
 }

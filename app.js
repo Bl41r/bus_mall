@@ -1,10 +1,12 @@
 'use strict';
 
 var totalClicks = 0;
-var uindexArray = [-1,-1,-1]; //initial dummy values, get replaced
+var uindexArray = [-1,-1,-1]; //used index array
 var productsArray = [];
-var container = document.getElementById('container');
 var clicksAllowed = 25;
+var totalRating = 0;
+var container = document.getElementById('container');
+var welcomeScreen = document.getElementById('welcome');
 
 function Product(name, loc) {
   this.name = name,
@@ -19,7 +21,7 @@ function getRandomIntInclusive(min, max) {  //from MDN
 }
 
 function selectImages(exclude) {
-  //select 3 random array indices, which cannot have a number that exclude has, and cannot repeat
+  //select 3 random array indices, which cannot have a number that [exclude] has, and cannot repeat
   var a,b,c;
   do {
     a = getRandomIntInclusive(0, productsArray.length - 1);
@@ -34,11 +36,7 @@ function selectImages(exclude) {
 }
 
 function printResults() {
-  var totalRating = 0;
-  for (var i = 0; i < productsArray.length; i++) {
-    totalRating += productsArray[i].rating;
-    console.log(productsArray[i].name + ': ' + productsArray[i].tally + ', ' + productsArray[i].rating);
-  }
+  console.table(productsArray);
   console.log('total ratings sum: ', totalRating);
 }
 
@@ -66,6 +64,7 @@ function loadProducts() { //later, for all in txt file, put into array
 }
 
 function onClick(e) {
+  console.log('CLICK');
   init();
   if (e.target.id === 'container') {
     console.log('container clicked');
@@ -105,6 +104,7 @@ function init() { // initialize images
 function main() {
   loadProducts();
   init();
+  welcomeScreen.addEventListener('click', function(e) { welcomeScreen.setAttribute('class', 'hidden'); e.stopPropagation();});
   container.addEventListener('click', onClick);
 }
 
