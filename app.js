@@ -1,7 +1,7 @@
 'use strict';
 
 var totalClicks = 0;
-var uindexArray = [0,1,2];
+var uindexArray = [-1,-1,-1]; //initial dummy values, get replaced
 var productsArray = [];
 var container = document.getElementById('container');
 var clicksAllowed = 25;
@@ -16,11 +16,10 @@ function Product(name, loc) {
 
 function getRandomIntInclusive(min, max) {  //from MDN
   return Math.floor(Math.random() * (max - min + 1)) + min;
-} //find better func later
+}
 
 function selectImages(exclude) {
-  //select 3 random numbers, which cannot have a number that exclude has
-  //and, cannot repeat
+  //select 3 random numbers, which cannot have a number that exclude has, and cannot repeat
   var a,b,c;
   a = getRandomIntInclusive(0, productsArray.length - 1);
   b = getRandomIntInclusive(0, productsArray.length - 1);
@@ -34,14 +33,16 @@ function selectImages(exclude) {
   while (c === exclude[0] || c === exclude[1] || c === exclude[2] || c === a || c === b) {
     c = getRandomIntInclusive(0, productsArray.length - 1);
   }
-  console.log('randoms', [a,b,c]);
   return [a,b,c];
 }
 
 function printResults() {
+  var totalRating = 0;
   for (var i = 0; i < productsArray.length; i++) {
+    totalRating += productsArray[i].rating;
     console.log(productsArray[i].name + ': ' + productsArray[i].tally + ', ' + productsArray[i].rating);
   }
+  console.log('total ratings sum: ', totalRating);
 }
 
 function loadProducts() { //later, for all in txt file, put into array
@@ -65,20 +66,9 @@ function loadProducts() { //later, for all in txt file, put into array
   productsArray.push(new Product('watercan', 'img/watercan.jpg'));
   productsArray.push(new Product('wineglass', 'img/wineglass.jpg'));
   productsArray.push(new Product('pen', 'img/pen.jpg'));
-  console.log('products loaded: ', productsArray);
 }
 
 function onClick(e) {
-  //load 3 images from 3 rando numbers NOT in uindexArray
-  //after loaded, uindexArray[0,1,2] is current images -check
-  //products with uindex arrays increment views -check
-  //on click, do stuff below
-  if (totalClicks >= clicksAllowed) {
-    console.log('25 data points aquired');
-    container.removeEventListener('click', onClick);
-    printResults();
-    return;
-  }
   uindexArray = selectImages(uindexArray); //exclude previous uindex values
   document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
   document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
@@ -92,27 +82,29 @@ function onClick(e) {
     totalClicks++;
     console.log('click number ' + totalClicks);
     if (e.target.id === 'img1') {
-      console.log('img1 clicked');
       productsArray[uindexArray[0]].tally++;
-      productsArray[uindexArray[0]].rating += [uindexArray[1]].rating + productsArray[uindexArray[2]].rating;
+      productsArray[uindexArray[0]].rating += productsArray[uindexArray[1]].rating + productsArray[uindexArray[2]].rating;
     } else if (e.target.id === 'img2') {
-      console.log('img2 clicked');
       productsArray[uindexArray[1]].tally++;
       productsArray[uindexArray[1]].rating += productsArray[uindexArray[0]].rating + productsArray[uindexArray[2]].rating;
     } else if (e.target.id === 'img3') {
-      console.log('img3 clicked');
       productsArray[uindexArray[2]].tally++;
       productsArray[uindexArray[2]].rating += productsArray[uindexArray[0]].rating + productsArray[uindexArray[1]].rating;
     }
   }
+  if (totalClicks >= clicksAllowed) {
+    console.log('25 data points aquired');
+    container.removeEventListener('click', onClick);
+    printResults(); //console
+    document.getElementById('genResults').setAttribute('class', 'visible');
+    return;
+  }
 }
 
 function main() {
-  console.log('main called');
   loadProducts();
-  ////////////////////Load first images
+  ////////////////////Initialize first images, clean later, depends on how test starts
   uindexArray = selectImages(uindexArray); //exclude previous uindex values
-  console.log('init, uindexArray: ' + uindexArray[0] + ' ' + uindexArray[1] + ' ' + uindexArray[2]);
   document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
   document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
   document.getElementById('img3').src = productsArray[uindexArray[2]].loc;
