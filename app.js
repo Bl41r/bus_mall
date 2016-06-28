@@ -14,6 +14,7 @@ var productRatings = [];
 
 var clicksAllowed = 25;
 var totalRating = 0;
+
 var container = document.getElementById('container');
 var welcomeScreen = document.getElementById('welcome');
 var displayResultsBtn = document.getElementById('genResults');
@@ -66,20 +67,19 @@ function printResults() {
     labels : productNames,
     datasets : [ {
       label: 'Selection Data',
-      fillColor : 'rgba(172,194,132,0.4)',
-      strokeColor : '#ACC26D',
-      pointColor : '#fff',
-      pointStrokeColor : '#9DB86D',
-      borderWidth: 2,
-      hoverBorderColor: '#A7FF2C',
+      backgroundColor: 'rgba(167,255,44,0.2)',
+      borderColor: 'rgba(111,178,18,0.5)',
+      borderWidth: 1,
+      hoverBackgroundColor: 'rgba(167,255,44,0.4)',
+      hoverBorderColor: 'rgba(111,178,18,0.9)',
       data : productTallys
     }
 	]
   };
   chart.setAttribute('class', 'visible');
-  // new Chart(chart).Bar(chartData);
   new Chart.Bar(chart, {
-    data: chartData
+    data: chartData,
+    axisY: {valueFormatString:  '#'}
   });
 }
 
@@ -145,10 +145,9 @@ function init() { // initialize images
 function main() {
   loadProducts();
   init();
-  welcomeScreen.addEventListener('click', function(e) { welcomeScreen.setAttribute('class', 'hidden'); e.stopPropagation();});
+  welcomeScreen.addEventListener('click', function(e) {welcomeScreen.setAttribute('class', 'hidden'); e.stopPropagation();});
   container.addEventListener('click', onClick);
   displayResultsBtn.addEventListener('click', printResults);
-
 }
 
 main();
