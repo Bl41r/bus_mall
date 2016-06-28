@@ -67,6 +67,11 @@ function onClick(e) {
   //after loaded, uindexArray[0,1,2] is current images -check
   //products with uindex arrays increment views -check
   //on click, do stuff below
+  if (totalClicks >= clicksAllowed) {
+    console.log('25 data points aquired');
+    container.removeEventListener('click', onClick);
+    return;
+  }
   uindexArray = selectImages(uindexArray); //exclude previous uindex values
   document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
   document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
@@ -74,10 +79,7 @@ function onClick(e) {
   productsArray[uindexArray[0]].views++;
   productsArray[uindexArray[1]].views++;
   productsArray[uindexArray[2]].views++;
-  if (totalClicks >= clicksAllowed) {
-    console.log('25 data points aquired');
-    container.removeEventListener('click', onClick);
-  } else if (e.target.id === 'container') {
+  if (e.target.id === 'container') {
     console.log('container clicked');
   } else {
     totalClicks++;
