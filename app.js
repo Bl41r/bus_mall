@@ -20,10 +20,9 @@ function getRandomIntInclusive(min, max) {  //from MDN
 
 function selectImages(exclude) {
   //select 3 random numbers, which cannot have a number that exclude has, and cannot repeat
-  var a,b,c;
-  a = getRandomIntInclusive(0, productsArray.length - 1);
-  b = getRandomIntInclusive(0, productsArray.length - 1);
-  c = getRandomIntInclusive(0, productsArray.length - 1);
+  var a = getRandomIntInclusive(0, productsArray.length - 1);
+  var b = getRandomIntInclusive(0, productsArray.length - 1);
+  var c = getRandomIntInclusive(0, productsArray.length - 1);
   while (a === exclude[0] || a === exclude[1] || a === exclude[2]) {
     a = getRandomIntInclusive(0, productsArray.length - 1);
   }
@@ -93,7 +92,7 @@ function onClick(e) {
     }
   }
   if (totalClicks >= clicksAllowed) {
-    console.log('25 data points aquired');
+    console.log('25 data points aquired.');
     container.removeEventListener('click', onClick);
     printResults(); //console
     document.getElementById('genResults').setAttribute('class', 'visible');
