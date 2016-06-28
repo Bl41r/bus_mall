@@ -49,31 +49,49 @@ function selectImages(exclude) {
 function updateChartData() {
   for (var i = 0; i < productsArray.length; i++) {
     productNames[i] = productsArray[i].name;
-    productTallys[i] = parseInt(productsArray[i].tally);
-    // productViews[i] = productsArray[i].views;
-    // productRatings[i] = productsArray[i].rating;
+    productTallys[i] = productsArray[i].tally;
+    productViews[i] = productsArray[i].views;
+    productRatings[i] = productsArray[i].rating * 100 / totalRating;
   }
 }
 
 function printResults() {
-  updateChartData();
   console.table(productsArray);
   for (var i = 0; i < productsArray.length; i++) {
     // productsArray[i].rating /= (productsArray[i].views || 1); //fixlater
     totalRating += productsArray[i].rating;
   }
+  updateChartData();
   console.log('total ratings sum: ', totalRating);
   var chartData = {
     labels : productNames,
     datasets : [ {
-      label: 'Selection Data',
+      label: 'Product Clicks',
       backgroundColor: 'rgba(167,255,44,0.6)',
-      borderColor: 'rgba(111,178,18,0.5)',
+      borderColor: 'rgba(111,178,18,0.9)',
       borderWidth: 1,
-      hoverBackgroundColor: 'rgba(167,255,44,0.8)',
+      hoverBackgroundColor: 'rgba(111,178,18,0.9)',
       hoverBorderColor: 'rgba(111,178,18,0.9)',
       data : productTallys
-    }
+    },
+      {
+        label: 'Product Views',
+        backgroundColor: 'rgba(44,255,249,0.2)',
+        borderColor: 'rgba(44,255,249,0.8)',
+        hoverBackgroundColor: 'rgba(44,255,249,0.8)',
+        hoverBorderColor: 'rgba(44,255,249,0.8)',
+        borderWidth: 1,
+        data: productViews
+      },
+      {
+        label: 'Product Rating',
+        backgroundColor: 'rgba(255,117,41,0.2)',
+        borderColor: 'rgba(255,117,41,0.8)',
+        hoverBackgroundColor: 'rgba(255,117,41,0.8)',
+        hoverBorderColor: 'rgba(255,117,41,0.8)',
+        borderWidth: 1,
+        data: productRatings
+      }
 	]
   };
   chart.setAttribute('class', 'visible');
