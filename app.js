@@ -1,40 +1,41 @@
 'use strict';
 
 var totalClicks = 0;
-var usedArray = [];
+var uindexArray = [0,1,2];
 var productsArray = [];
 var container = document.getElementById('container');
+var clicksAllowed = 25;
 
 function Product(name, loc) {
-  this.name = '',
-  this.loc = '',
+  this.name = name,
+  this.loc = loc,
   this.tally = 0;
   this.views = 0;
   this.rating = 1;
 }
+
 function getRandomIntInclusive(min, max) {  //from MDN
   return Math.floor(Math.random() * (max - min + 1)) + min;
 } //find better func later
 
-function reset(i) {
-  for (var j = 0; j < i; j++) {
-    var index = getRandomIntInclusive(0, productsArray.length);
-    usedArray.push(productsArray[index]);
-    productsArray.splice(index,1);
+function selectImages(exclude) {
+  //select 3 random numbers, which cannot have a number that exclude has
+  //and, cannot repeat
+  var a,b,c;
+  a = getRandomIntInclusive(0, productsArray.length - 1);
+  b = getRandomIntInclusive(0, productsArray.length - 1);
+  c = getRandomIntInclusive(0, productsArray.length - 1);
+  while (a === exclude[0] || a === exclude[1] || a === exclude[2]) {
+    a = getRandomIntInclusive(0, productsArray.length - 1);
   }
-}
-
-function selectImages() {
-  var nums = [];
-  for (var i = 0; i < 3; i++) {
-    nums[i] = getRandomIntInclusive(0, productsArray.length);
+  while (b === exclude[0] || b === exclude[1] || b === exclude[2] || b === a) {
+    b = getRandomIntInclusive(0, productsArray.length - 1);
   }
-  if (nums[0] === nums[1] || nums[0] === nums[2] || nums[1] === nums[2]) {
-    console.log('matching nums: ', nums);
-    nums = selectImages();
-  } else {
-    return nums;
+  while (c === exclude[0] || c === exclude[1] || c === exclude[2] || c === a || c === b) {
+    c = getRandomIntInclusive(0, productsArray.length - 1);
   }
+  console.log('randoms', [a,b,c]);
+  return [a,b,c];
 }
 
 function loadProducts() { //later, for all in txt file, put into array
@@ -56,29 +57,26 @@ function loadProducts() { //later, for all in txt file, put into array
   productsArray.push(new Product('unicorn.jpg', 'img/unicorn.jpg'));
   productsArray.push(new Product('usb', 'img/usb.gif'));
   productsArray.push(new Product('watercan', 'img/watercan.jpg'));
-  productsArray.push(new Product('winglass', 'img/winglass.jpg'));
+  productsArray.push(new Product('wineglass', 'img/wineglass.jpg'));
   productsArray.push(new Product('pen', 'img/pen.jpg'));
-  reset(3);
   console.log('products loaded: ', productsArray);
 }
 
-function displayImages() {
-  console.log('displayImages called');
-  var index = selectImages();
-  document.getElementById('img1').src = productsArray[index[0]].loc;
-  document.getElementById('img2').src = productsArray[index[1]].loc;
-  document.getElementById('img3').src = productsArray[index[2]].loc;
-  usedArray.push(productsArray[index[0]]);
-  usedArray.push(productsArray[index[1]]);
-  usedArray.push(productsArray[index[2]]);
-  productsArray.splice(productsArray[index[0]],1);
-  productsArray.splice(productsArray[index[1]],1);
-  productsArray.splice(productsArray[index[2]],1);
-}
-
 function onClick(e) {
-  if (totalClicks > 25) {
+  //load 3 images from 3 rando numbers NOT in uindexArray
+  //after loaded, uindexArray[0,1,2] is current images -check
+  //products with uindex arrays increment views -check
+  //on click, do stuff below
+  uindexArray = selectImages(uindexArray); //exclude previous uindex values
+  document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
+  document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
+  document.getElementById('img3').src = productsArray[uindexArray[2]].loc;
+  productsArray[uindexArray[0]].views++;
+  productsArray[uindexArray[1]].views++;
+  productsArray[uindexArray[2]].views++;
+  if (totalClicks >= clicksAllowed) {
     console.log('25 data points aquired');
+    container.removeEventListener('click', onClick);
   } else if (e.target.id === 'container') {
     console.log('container clicked');
   } else {
@@ -86,10 +84,13 @@ function onClick(e) {
     console.log('click number ' + totalClicks);
     if (e.target.id === 'img1') {
       console.log('img1 clicked');
+      productsArray[uindexArray[0]].tally++;
     } else if (e.target.id === 'img2') {
       console.log('img2 clicked');
+      productsArray[uindexArray[1]].tally++;
     } else if (e.target.id === 'img3') {
       console.log('img3 clicked');
+      productsArray[uindexArray[2]].tally++;
     }
   }
 }
@@ -97,6 +98,16 @@ function onClick(e) {
 function main() {
   console.log('main called');
   loadProducts();
+  ////////////////////Load first images
+  uindexArray = selectImages(uindexArray); //exclude previous uindex values
+  console.log('init, uindexArray: ' + uindexArray[0] + ' ' + uindexArray[1] + ' ' + uindexArray[2]);
+  document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
+  document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
+  document.getElementById('img3').src = productsArray[uindexArray[2]].loc;
+  productsArray[uindexArray[0]].views++;
+  productsArray[uindexArray[1]].views++;
+  productsArray[uindexArray[2]].views++;
+  ////////////////////
   container.addEventListener('click', onClick);
 }
 
