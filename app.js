@@ -49,7 +49,7 @@ function selectImages(exclude) {
 function updateChartData() {
   for (var i = 0; i < productsArray.length; i++) {
     productNames[i] = productsArray[i].name;
-    productTallys[i] = productsArray[i].tally;
+    productTallys[i] = parseInt(productsArray[i].tally);
     // productViews[i] = productsArray[i].views;
     // productRatings[i] = productsArray[i].rating;
   }
@@ -67,10 +67,10 @@ function printResults() {
     labels : productNames,
     datasets : [ {
       label: 'Selection Data',
-      backgroundColor: 'rgba(167,255,44,0.2)',
+      backgroundColor: 'rgba(167,255,44,0.6)',
       borderColor: 'rgba(111,178,18,0.5)',
       borderWidth: 1,
-      hoverBackgroundColor: 'rgba(167,255,44,0.4)',
+      hoverBackgroundColor: 'rgba(167,255,44,0.8)',
       hoverBorderColor: 'rgba(111,178,18,0.9)',
       data : productTallys
     }
@@ -78,8 +78,11 @@ function printResults() {
   };
   chart.setAttribute('class', 'visible');
   new Chart.Bar(chart, {
+    // axisY: {scaleOverride: true, scaleSteps : 10,
+    //    scaleStepWidth : 1, scaleStartValue : 0,
+    // scaleLabel: function(e) {if ((e.value % 1) != 0) {return null;} else {return e.value;}}},
+    //okay, screw you too chart.js
     data: chartData,
-    axisY: {valueFormatString:  '#'}
   });
 }
 

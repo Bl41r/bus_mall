@@ -61,7 +61,7 @@ div {
 #welcome {
 	z-index: 10;
 	position: fixed;
-	height: 300px;
+	height: 600px;
 	width: 100%;
 	background-color: blue;
 }
@@ -70,7 +70,12 @@ div {
 	display: none;
 }
 
-canvas {
-	outline: 2px solid black;
-	size: 75%;
+#chartdiv {
+	width: 900px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-content: center;
+  align-content: center;
 }
