@@ -19,19 +19,17 @@ function getRandomIntInclusive(min, max) {  //from MDN
 }
 
 function selectImages(exclude) {
-  //select 3 random numbers, which cannot have a number that exclude has, and cannot repeat
-  var a = getRandomIntInclusive(0, productsArray.length - 1);
-  var b = getRandomIntInclusive(0, productsArray.length - 1);
-  var c = getRandomIntInclusive(0, productsArray.length - 1);
-  while (a === exclude[0] || a === exclude[1] || a === exclude[2]) {
+  //select 3 random array indices, which cannot have a number that exclude has, and cannot repeat
+  var a,b,c;
+  do {
     a = getRandomIntInclusive(0, productsArray.length - 1);
-  }
-  while (b === exclude[0] || b === exclude[1] || b === exclude[2] || b === a) {
+  } while (a === exclude[0] || a === exclude[1] || a === exclude[2]);
+  do {
     b = getRandomIntInclusive(0, productsArray.length - 1);
-  }
-  while (c === exclude[0] || c === exclude[1] || c === exclude[2] || c === a || c === b) {
+  } while (b === exclude[0] || b === exclude[1] || b === exclude[2] || b === a);
+  do {
     c = getRandomIntInclusive(0, productsArray.length - 1);
-  }
+  } while ((c === exclude[0] || c === exclude[1] || c === exclude[2] || c === a || c === b));
   return [a,b,c];
 }
 
@@ -68,13 +66,7 @@ function loadProducts() { //later, for all in txt file, put into array
 }
 
 function onClick(e) {
-  uindexArray = selectImages(uindexArray); //exclude previous uindex values
-  document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
-  document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
-  document.getElementById('img3').src = productsArray[uindexArray[2]].loc;
-  productsArray[uindexArray[0]].views++;
-  productsArray[uindexArray[1]].views++;
-  productsArray[uindexArray[2]].views++;
+  init();
   if (e.target.id === 'container') {
     console.log('container clicked');
   } else {
@@ -100,9 +92,7 @@ function onClick(e) {
   }
 }
 
-function main() {
-  loadProducts();
-  ////////////////////Initialize first images, clean later, depends on how test starts
+function init() { // initialize images
   uindexArray = selectImages(uindexArray); //exclude previous uindex values
   document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
   document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
@@ -110,7 +100,11 @@ function main() {
   productsArray[uindexArray[0]].views++;
   productsArray[uindexArray[1]].views++;
   productsArray[uindexArray[2]].views++;
-  ////////////////////
+}
+
+function main() {
+  loadProducts();
+  init();
   container.addEventListener('click', onClick);
 }
 
