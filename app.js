@@ -19,7 +19,7 @@ function getRandomIntInclusive(min, max) {  //from MDN
 }
 
 function selectImages(exclude) {
-  //select 3 random numbers, which cannot have a number that exclude has, and cannot repeat
+  //select 3 random array indices, which cannot have a number that exclude has, and cannot repeat
   var a,b,c;
   do {
     a = getRandomIntInclusive(0, productsArray.length - 1);
@@ -66,13 +66,7 @@ function loadProducts() { //later, for all in txt file, put into array
 }
 
 function onClick(e) {
-  uindexArray = selectImages(uindexArray); //exclude previous uindex values
-  document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
-  document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
-  document.getElementById('img3').src = productsArray[uindexArray[2]].loc;
-  productsArray[uindexArray[0]].views++;
-  productsArray[uindexArray[1]].views++;
-  productsArray[uindexArray[2]].views++;
+  init();
   if (e.target.id === 'container') {
     console.log('container clicked');
   } else {
@@ -98,9 +92,7 @@ function onClick(e) {
   }
 }
 
-function main() {
-  loadProducts();
-  ////////////////////Initialize first images, clean later, depends on how test starts
+function init() { // initialize images
   uindexArray = selectImages(uindexArray); //exclude previous uindex values
   document.getElementById('img1').src = productsArray[uindexArray[0]].loc;
   document.getElementById('img2').src = productsArray[uindexArray[1]].loc;
@@ -108,7 +100,11 @@ function main() {
   productsArray[uindexArray[0]].views++;
   productsArray[uindexArray[1]].views++;
   productsArray[uindexArray[2]].views++;
-  ////////////////////
+}
+
+function main() {
+  loadProducts();
+  init();
   container.addEventListener('click', onClick);
 }
 
