@@ -38,6 +38,12 @@ function selectImages(exclude) {
   return [a,b,c];
 }
 
+function printResults() {
+  for (var i = 0; i < productsArray.length; i++) {
+    console.log(productsArray[i].name + ': ' + productsArray[i].tally + ', ' + productsArray[i].rating);
+  }
+}
+
 function loadProducts() { //later, for all in txt file, put into array
   productsArray.push(new Product('bag', 'img/bag.jpg'));
   productsArray.push(new Product('banana', 'img/banana.jpg'));
@@ -70,6 +76,7 @@ function onClick(e) {
   if (totalClicks >= clicksAllowed) {
     console.log('25 data points aquired');
     container.removeEventListener('click', onClick);
+    printResults();
     return;
   }
   uindexArray = selectImages(uindexArray); //exclude previous uindex values
@@ -87,12 +94,15 @@ function onClick(e) {
     if (e.target.id === 'img1') {
       console.log('img1 clicked');
       productsArray[uindexArray[0]].tally++;
+      productsArray[uindexArray[0]].rating += [uindexArray[1]].rating + productsArray[uindexArray[2]].rating;
     } else if (e.target.id === 'img2') {
       console.log('img2 clicked');
       productsArray[uindexArray[1]].tally++;
+      productsArray[uindexArray[1]].rating += productsArray[uindexArray[0]].rating + productsArray[uindexArray[2]].rating;
     } else if (e.target.id === 'img3') {
       console.log('img3 clicked');
       productsArray[uindexArray[2]].tally++;
+      productsArray[uindexArray[2]].rating += productsArray[uindexArray[0]].rating + productsArray[uindexArray[1]].rating;
     }
   }
 }
