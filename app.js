@@ -20,18 +20,16 @@ function getRandomIntInclusive(min, max) {  //from MDN
 
 function selectImages(exclude) {
   //select 3 random numbers, which cannot have a number that exclude has, and cannot repeat
-  var a = getRandomIntInclusive(0, productsArray.length - 1);
-  var b = getRandomIntInclusive(0, productsArray.length - 1);
-  var c = getRandomIntInclusive(0, productsArray.length - 1);
-  while (a === exclude[0] || a === exclude[1] || a === exclude[2]) {
+  var a,b,c;
+  do {
     a = getRandomIntInclusive(0, productsArray.length - 1);
-  }
-  while (b === exclude[0] || b === exclude[1] || b === exclude[2] || b === a) {
+  } while (a === exclude[0] || a === exclude[1] || a === exclude[2]);
+  do {
     b = getRandomIntInclusive(0, productsArray.length - 1);
-  }
-  while (c === exclude[0] || c === exclude[1] || c === exclude[2] || c === a || c === b) {
+  } while (b === exclude[0] || b === exclude[1] || b === exclude[2] || b === a);
+  do {
     c = getRandomIntInclusive(0, productsArray.length - 1);
-  }
+  } while ((c === exclude[0] || c === exclude[1] || c === exclude[2] || c === a || c === b));
   return [a,b,c];
 }
 
