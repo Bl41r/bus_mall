@@ -110,12 +110,11 @@ function loadProducts() { //later, for all in txt file, put into array
 }
 
 function onClick(e) {
-  init();
   if (e.target.id === 'container') {
     console.log('container clicked');
   } else {
+    init();
     totalClicks++;
-    console.log('click number ' + totalClicks);
     if (e.target.id === 'img1') {
       productsArray[uindexArray[0]].tally++;
       productsArray[uindexArray[0]].rating += productsArray[uindexArray[1]].rating + productsArray[uindexArray[2]].rating;
