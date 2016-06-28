@@ -3,6 +3,15 @@
 var totalClicks = 0;
 var uindexArray = [-1,-1,-1]; //used index array
 var productsArray = [];
+
+//for chart
+var chart = document.getElementById('chart');
+chart.getContext('2d');
+var productNames = [];
+var productTallys = [];
+var productViews = [];
+var productRatings = [];
+
 var clicksAllowed = 25;
 var totalRating = 0;
 var container = document.getElementById('container');
@@ -36,12 +45,42 @@ function selectImages(exclude) {
   return [a,b,c];
 }
 
+function updateChartData() {
+  for (var i = 0; i < productsArray.length; i++) {
+    productNames[i] = productsArray[i].name;
+    productTallys[i] = productsArray[i].tally;
+    // productViews[i] = productsArray[i].views;
+    // productRatings[i] = productsArray[i].rating;
+  }
+}
+
 function printResults() {
+  updateChartData();
   console.table(productsArray);
   for (var i = 0; i < productsArray.length; i++) {
+    // productsArray[i].rating /= (productsArray[i].views || 1); //fixlater
     totalRating += productsArray[i].rating;
   }
   console.log('total ratings sum: ', totalRating);
+  var chartData = {
+    labels : productNames,
+    datasets : [ {
+      label: 'Selection Data',
+      fillColor : 'rgba(172,194,132,0.4)',
+      strokeColor : '#ACC26D',
+      pointColor : '#fff',
+      pointStrokeColor : '#9DB86D',
+      borderWidth: 2,
+      hoverBorderColor: '#A7FF2C',
+      data : productTallys
+    }
+	]
+  };
+  chart.setAttribute('class', 'visible');
+  // new Chart(chart).Bar(chartData);
+  new Chart.Bar(chart, {
+    data: chartData
+  });
 }
 
 function loadProducts() { //later, for all in txt file, put into array
@@ -68,7 +107,6 @@ function loadProducts() { //later, for all in txt file, put into array
 }
 
 function onClick(e) {
-  console.log('CLICK');
   init();
   if (e.target.id === 'container') {
     console.log('container clicked');
@@ -110,6 +148,7 @@ function main() {
   welcomeScreen.addEventListener('click', function(e) { welcomeScreen.setAttribute('class', 'hidden'); e.stopPropagation();});
   container.addEventListener('click', onClick);
   displayResultsBtn.addEventListener('click', printResults);
+
 }
 
 main();
