@@ -7,6 +7,7 @@ var clicksAllowed = 25;
 var totalRating = 0;
 var container = document.getElementById('container');
 var welcomeScreen = document.getElementById('welcome');
+var displayResultsBtn = document.getElementById('genResults');
 
 function Product(name, loc) {
   this.name = name,
@@ -37,6 +38,9 @@ function selectImages(exclude) {
 
 function printResults() {
   console.table(productsArray);
+  for (var i = 0; i < productsArray.length; i++) {
+    totalRating += productsArray[i].rating;
+  }
   console.log('total ratings sum: ', totalRating);
 }
 
@@ -85,8 +89,7 @@ function onClick(e) {
   if (totalClicks >= clicksAllowed) {
     console.log('25 data points aquired.');
     container.removeEventListener('click', onClick);
-    printResults(); //console
-    document.getElementById('genResults').setAttribute('class', 'visible');
+    displayResultsBtn.setAttribute('class', 'visible');
     return;
   }
 }
@@ -106,6 +109,7 @@ function main() {
   init();
   welcomeScreen.addEventListener('click', function(e) { welcomeScreen.setAttribute('class', 'hidden'); e.stopPropagation();});
   container.addEventListener('click', onClick);
+  displayResultsBtn.addEventListener('click', printResults);
 }
 
 main();
