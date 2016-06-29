@@ -4,7 +4,7 @@ var totalClicks = 0;
 var uindexArray = [-1,-1,-1]; //used index array
 var productsArray = [];
 var clicksAllowed = 25;
-var productNames = ['bag.jpg','banana.jpg','bathroom.jpg','boots.jpg','breakfast.jpg','bubblegum.jpg','boots.jpg','breakfast.jpg','bubblegum.jpg','chair.jpg','cthulhu.jpg','dogduck.jpg','dragon.jpg','petsweep.jpg','scissors.jpg','shark.jpg','sweep.png','tauntaun.jpg','unicorn.jpg','usb.gif','watercan.jpg','wineglass.jpg','pen.jpg'];
+var productNames = ['bag.jpg','banana.jpg','bathroom.jpg','boots.jpg','breakfast.jpg','bubblegum.jpg','chair.jpg','cthulhu.jpg','dogduck.jpg','dragon.jpg','petsweep.jpg','scissors.jpg','shark.jpg','sweep.png','tauntaun.jpg','unicorn.jpg','usb.gif','watercan.jpg','wineglass.jpg','pen.jpg'];
 
 var chart = document.getElementById('chart');
 var productTallys = [];
@@ -122,6 +122,7 @@ function init() { // initialize images
   productsArray[uindexArray[0]].views++;
   productsArray[uindexArray[1]].views++;
   productsArray[uindexArray[2]].views++;
+  console.log([productNames[uindexArray[0]],productNames[uindexArray[1]],productNames[uindexArray[2]]]);
 }
 
 function eventsListen() {
