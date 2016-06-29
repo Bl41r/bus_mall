@@ -87,8 +87,14 @@ function fileNameNoExt(filelist) {
 }
 
 function loadProducts() { //later, for all in local storage, put into array
-  for (var i = 0; i < productNames.length; i++) {
-    productsArray.push(new Product(productNames[i].split('.')[0]));
+  if (localStorage.busMall) {
+    productsArray = JSON.parse(localStorage.busMall);
+    console.log('localStorage for busMall exists.');
+  } else {
+    console.log('localStorage was not found.');
+    for (var i = 0; i < productNames.length; i++) {
+      productsArray.push(new Product(productNames[i].split('.')[0]));
+    }
   }
 }
 
@@ -96,7 +102,6 @@ function onClick(e) {
   if (e.target.id === 'container') {
     console.log('container clicked');
   } else {
-    init();
     totalClicks++;
     if (e.target.id === 'img1') {
       productsArray[uindexArray[0]].tally++;
@@ -105,12 +110,16 @@ function onClick(e) {
     } else if (e.target.id === 'img3') {
       productsArray[uindexArray[2]].tally++;
     }
+    localStorage.busMall = JSON.stringify(productsArray);
+
   }
   if (totalClicks >= clicksAllowed) {
-    console.log('25 data points aquired.');
+    console.log(clicksAllowed + ' data points aquired.');
     container.removeEventListener('click', onClick);
     displayResultsBtn.setAttribute('class', 'visible');
     return;
+  } else {
+    init();
   }
 }
 
@@ -135,7 +144,7 @@ function eventsListen() {
 
 function main() {
   loadProducts();
-  init();
+  init();  // <- add storedata to func
   eventsListen();
 }
 
