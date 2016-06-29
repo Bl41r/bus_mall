@@ -50,6 +50,7 @@ table {
 
 img {
   margin: 30px;
+	border: 2px solid black;
 }
 
 div {
@@ -58,16 +59,24 @@ div {
   text-align: center;
 }
 
+p {
+	margin: 20px 160px;
+}
+
+h2 {
+	font-size: 32px;
+}
+
+.hidden {
+	display: none;
+}
+
 #welcome {
 	z-index: 10;
 	position: fixed;
 	height: 600px;
 	width: 100%;
 	background-color: blue;
-}
-
-.hidden {
-	display: none;
 }
 
 #chartdiv {

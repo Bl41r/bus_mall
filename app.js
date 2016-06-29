@@ -1,9 +1,9 @@
 'use strict';
 
+var clicksAllowed = 25;
 var totalClicks = 0;
 var uindexArray = [-1,-1,-1]; //used index array
 var productsArray = [];
-var clicksAllowed = 25;
 var productNames = ['bag.jpg','banana.jpg','bathroom.jpg','boots.jpg','breakfast.jpg','bubblegum.jpg','chair.jpg','cthulhu.jpg','dogduck.jpg','dragon.jpg','petsweep.jpg','scissors.jpg','shark.jpg','sweep.png','tauntaun.jpg','unicorn.jpg','usb.gif','watercan.jpg','wineglass.jpg','pen.jpg'];
 
 var chart = document.getElementById('chart');
@@ -86,7 +86,7 @@ function fileNameNoExt(filelist) {
   return files;
 }
 
-function loadProducts() { //later, for all in txt file, put into array
+function loadProducts() { //later, for all in local storage, put into array
   for (var i = 0; i < productNames.length; i++) {
     productsArray.push(new Product(productNames[i].split('.')[0]));
   }
@@ -115,14 +115,13 @@ function onClick(e) {
 }
 
 function init() { // initialize images
-  uindexArray = selectImages(uindexArray); //exclude previous uindex values
+  uindexArray = selectImages(uindexArray); //exclude previous images
   document.getElementById('img1').src = 'img/' + productNames[uindexArray[0]];
   document.getElementById('img2').src = 'img/' + productNames[uindexArray[1]];
   document.getElementById('img3').src = 'img/' + productNames[uindexArray[2]];
   productsArray[uindexArray[0]].views++;
   productsArray[uindexArray[1]].views++;
   productsArray[uindexArray[2]].views++;
-  console.log([productNames[uindexArray[0]],productNames[uindexArray[1]],productNames[uindexArray[2]]]);
 }
 
 function eventsListen() {
