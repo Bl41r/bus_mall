@@ -58,6 +58,24 @@ div {
   text-align: center;
 }
 
+#welcome {
+	z-index: 10;
+	position: fixed;
+	height: 600px;
+	width: 100%;
+	background-color: blue;
+}
+
 .hidden {
 	display: none;
+}
+
+#chartdiv {
+	width: 950px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-content: center;
+  align-content: center;
 }
