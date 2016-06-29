@@ -48,6 +48,34 @@ function updateChartData() {
 }
 
 function printResults() {
+  printResultsChart();
+  printResultsTable();
+}
+
+function drawTable() {
+  var table = new google.visualization.Table(document.getElementById('tablediv'));
+  var data = new google.visualization.DataTable();
+  var rowData = [];
+  data.addColumn('string', 'Item');
+  data.addColumn('number', 'Clicks');
+  data.addColumn('number', 'Views');
+  data.addColumn('number', 'Clicks/Views');
+  for (var i = 0; i < productsArray.length; i++) {
+    rowData[i] = [productsArray[i].name.split('.')[0], productsArray[i].tally, productsArray[i].views, (productsArray[i].tally / productsArray[i].views)];
+  }
+  console.table(rowData);
+  data.addRows(rowData);
+  console.log('table should be visible');
+  table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+  document.getElementById('tablediv').setAttribute('class', 'visible');
+}
+
+function printResultsTable() {
+  google.charts.load('current', {'packages':['table']});
+  google.charts.setOnLoadCallback(drawTable);
+}
+
+function printResultsChart() {
   console.table(productsArray);
   updateChartData();
   chart.getContext('2d');
@@ -101,6 +129,7 @@ function loadProducts() { //later, for all in local storage, put into array
 function onClick(e) {
   if (e.target.id === 'container') {
     console.log('container clicked');
+    return;
   } else {
     totalClicks++;
     if (e.target.id === 'img1') {
@@ -144,7 +173,7 @@ function eventsListen() {
 
 function main() {
   loadProducts();
-  init();  // <- add storedata to func
+  init();
   eventsListen();
 }
 

@@ -88,3 +88,8 @@ h2 {
   -webkit-align-content: center;
   align-content: center;
 }
+
+#tablediv {
+	width: 500px;
+	margin: 40px auto;
+}
