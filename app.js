@@ -48,7 +48,37 @@ function updateChartData() {
 }
 
 function printResults() {
-  console.table(productsArray);
+  printResultsChart();
+  printResultsTable();
+}
+
+function drawTable() {
+  var table = new google.visualization.Table(document.getElementById('tablediv'));
+  var data = new google.visualization.DataTable();
+  var rowData = [];
+  data.addColumn('string', 'Item');
+  data.addColumn('number', 'Clicks');
+  data.addColumn('number', 'Views');
+  data.addColumn('number', 'Clicks/Views');
+  data.addColumn('string', 'Recommended?');
+  for (var i = 0; i < productsArray.length; i++) {
+    var recommended = 'No';
+    if ((productsArray[i].tally / productsArray[i].views) >= 0.35) {
+      recommended = 'YES';
+    }
+    rowData[i] = [productsArray[i].name.split('.')[0], productsArray[i].tally, productsArray[i].views, (productsArray[i].tally / productsArray[i].views), recommended];
+  }
+  data.addRows(rowData);
+  table.draw(data, {showRowNumber: false, width: '100%', height: '100%', sortAscending: false, sortColumn: 3});
+  document.getElementById('tablediv').setAttribute('class', 'visible');
+}
+
+function printResultsTable() {
+  google.charts.load('current', {'packages':['table']});
+  google.charts.setOnLoadCallback(drawTable);
+}
+
+function printResultsChart() {
   updateChartData();
   chart.getContext('2d');
   var chartData = {
@@ -87,16 +117,19 @@ function fileNameNoExt(filelist) {
 }
 
 function loadProducts() { //later, for all in local storage, put into array
-  for (var i = 0; i < productNames.length; i++) {
-    productsArray.push(new Product(productNames[i].split('.')[0]));
+  if (localStorage.busMall) {
+    productsArray = JSON.parse(localStorage.busMall);
+  } else {
+    for (var i = 0; i < productNames.length; i++) {
+      productsArray.push(new Product(productNames[i].split('.')[0]));
+    }
   }
 }
 
 function onClick(e) {
   if (e.target.id === 'container') {
-    console.log('container clicked');
+    return;
   } else {
-    init();
     totalClicks++;
     if (e.target.id === 'img1') {
       productsArray[uindexArray[0]].tally++;
@@ -105,12 +138,16 @@ function onClick(e) {
     } else if (e.target.id === 'img3') {
       productsArray[uindexArray[2]].tally++;
     }
+    localStorage.busMall = JSON.stringify(productsArray);
+
   }
   if (totalClicks >= clicksAllowed) {
-    console.log('25 data points aquired.');
+    console.log(clicksAllowed + ' data points aquired.');
     container.removeEventListener('click', onClick);
     displayResultsBtn.setAttribute('class', 'visible');
     return;
+  } else {
+    init();
   }
 }
 

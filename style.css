@@ -51,6 +51,7 @@ table {
 img {
   margin: 30px;
 	border: 2px solid black;
+	cursor: pointer;
 }
 
 div {
@@ -65,6 +66,24 @@ p {
 
 h2 {
 	font-size: 32px;
+}
+
+input[type="button"] {
+	padding: 15px 10px;
+	color: white;
+	background-color: blue;
+	border-radius: 10px;
+  width: 15%;
+  border: none;
+  margin: 20px 0 20px 20px;
+  font-weight: bold;
+	transition: all 0.35s ease;
+}
+
+input[type="button"]:hover {
+	color: black;
+	background-color: #ff0;
+	cursor: pointer;
 }
 
 .hidden {
@@ -87,4 +106,13 @@ h2 {
   flex-wrap: wrap;
   -webkit-align-content: center;
   align-content: center;
+}
+
+#tablediv {
+	width: 500px;
+	margin: 40px auto;
+}
+
+#container {
+	border: 1px solid blue;
 }

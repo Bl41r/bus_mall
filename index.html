@@ -3,7 +3,8 @@
 	<head>
 		<link type="text/css" rel="stylesheet" href="style.css"/>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
-		<title>BusMall Market Research Application</title>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<title>BusMall Market Research Application</title>
 	</head>
 	<body>
     <h1>BusMall&reg; Market Research Application</h1>
@@ -18,12 +19,13 @@
       <img id="img1" src="#" style="width:200px;height:200px;"/>
       <img id="img2" src="#" style="width:200px;height:200px;"/>
       <img id="img3" src="#" style="width:200px;height:200px;"/>
-			<input type="button" id="genResults" class="hidden" name="genResults" value="View Results"/>
     </div>
+		<input type="button" id="genResults" class="hidden" name="genResults" value="View Results"/>
 		<div id="chartdiv">
 			<canvas id="chart" class="hidden" height="400" width="600"></canvas>
 			<!-- <script src="test.js"></script> !-->
 		</div>
+		<div id="tablediv" class="hidden"></div>
 		<script src="app.js"></script>
 	</body>
 </html>
