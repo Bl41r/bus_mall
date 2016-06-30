@@ -48,6 +48,7 @@ function updateChartData() {
 }
 
 function printResults() {
+  displayResultsBtn.setAttribute('class', 'clicked');
   printResultsChart();
   printResultsTable();
 }
@@ -94,7 +95,7 @@ function printResultsChart() {
     },
       {
         label: 'Product Views',
-        backgroundColor: 'rgba(44,255,249,0.2)',
+        backgroundColor: 'rgba(44,255,249,0.4)',
         borderColor: 'rgba(44,255,249,0.8)',
         hoverBackgroundColor: 'rgba(44,255,249,0.8)',
         hoverBorderColor: 'rgba(44,255,249,0.8)',
@@ -105,6 +106,17 @@ function printResultsChart() {
   chart.setAttribute('class', 'visible');
   new Chart.Bar(chart, {
     data: chartData,
+    options: {
+      responsive: true,
+      scales: {
+        yAxes: [{
+          ticks: {
+            min: 0,
+            stepSize: 10
+          }
+        }]
+      }
+    }
   });
 }
 

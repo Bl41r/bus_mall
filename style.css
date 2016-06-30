@@ -48,6 +48,10 @@ table {
 }
 /*-----------------------------*/
 
+body {
+	background-color: lightgrey;
+}
+
 img {
   margin: 30px;
 	border: 2px solid black;
@@ -70,7 +74,7 @@ h2 {
 
 input[type="button"] {
 	padding: 15px 10px;
-	color: white;
+	color: #FFFBDB;
 	background-color: blue;
 	border-radius: 10px;
   width: 15%;
@@ -86,6 +90,12 @@ input[type="button"]:hover {
 	cursor: pointer;
 }
 
+input[type="button"].clicked {
+	color: black;
+	background-color: #ff0;
+	cursor: pointer;
+}
+
 .hidden {
 	display: none;
 }
@@ -96,6 +106,7 @@ input[type="button"]:hover {
 	height: 600px;
 	width: 100%;
 	background-color: blue;
+	color: #FFFBDB;
 }
 
 #chartdiv {
@@ -115,4 +126,8 @@ input[type="button"]:hover {
 
 #container {
 	border: 1px solid blue;
+	background-color: rgba(0,0,255,0.8);
+	color: #FFFBDB;
+	font-size: 20px;
+	min-width: 900px;
 }
