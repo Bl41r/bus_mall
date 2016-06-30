@@ -60,13 +60,16 @@ function drawTable() {
   data.addColumn('number', 'Clicks');
   data.addColumn('number', 'Views');
   data.addColumn('number', 'Clicks/Views');
+  data.addColumn('string', 'Recommended?');
   for (var i = 0; i < productsArray.length; i++) {
-    rowData[i] = [productsArray[i].name.split('.')[0], productsArray[i].tally, productsArray[i].views, (productsArray[i].tally / productsArray[i].views)];
+    var recommended = 'No';
+    if ((productsArray[i].tally / productsArray[i].views) >= 0.35) {
+      recommended = 'YES';
+    }
+    rowData[i] = [productsArray[i].name.split('.')[0], productsArray[i].tally, productsArray[i].views, (productsArray[i].tally / productsArray[i].views), recommended];
   }
-  console.table(rowData);
   data.addRows(rowData);
-  console.log('table should be visible');
-  table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+  table.draw(data, {showRowNumber: false, width: '100%', height: '100%', sortAscending: false, sortColumn: 3});
   document.getElementById('tablediv').setAttribute('class', 'visible');
 }
 
@@ -76,7 +79,6 @@ function printResultsTable() {
 }
 
 function printResultsChart() {
-  console.table(productsArray);
   updateChartData();
   chart.getContext('2d');
   var chartData = {
@@ -117,9 +119,7 @@ function fileNameNoExt(filelist) {
 function loadProducts() { //later, for all in local storage, put into array
   if (localStorage.busMall) {
     productsArray = JSON.parse(localStorage.busMall);
-    console.log('localStorage for busMall exists.');
   } else {
-    console.log('localStorage was not found.');
     for (var i = 0; i < productNames.length; i++) {
       productsArray.push(new Product(productNames[i].split('.')[0]));
     }
@@ -128,7 +128,6 @@ function loadProducts() { //later, for all in local storage, put into array
 
 function onClick(e) {
   if (e.target.id === 'container') {
-    console.log('container clicked');
     return;
   } else {
     totalClicks++;
