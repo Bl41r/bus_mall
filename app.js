@@ -128,7 +128,7 @@ function fileNameNoExt(filelist) {
   return files;
 }
 
-function loadProducts() { //later, for all in local storage, put into array
+function loadProducts() {
   if (localStorage.busMall) {
     productsArray = JSON.parse(localStorage.busMall);
   } else {
@@ -163,7 +163,7 @@ function onClick(e) {
   }
 }
 
-function init() { // initialize images
+function init() { // initialize image display
   uindexArray = selectImages(uindexArray); //exclude previous images
   document.getElementById('img1').src = 'img/' + productNames[uindexArray[0]];
   document.getElementById('img2').src = 'img/' + productNames[uindexArray[1]];
