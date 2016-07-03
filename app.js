@@ -25,7 +25,7 @@ function getRandomIntInclusive(min, max) {  //from MDN
 }
 
 function selectImages(exclude) {
-  //select 3 random array indices, which cannot have a number that [exclude] has, and cannot repeat
+//select 3 random array indices, which cannot have a number that [exclude] has, and cannot repeat
   var a,b,c;
   do {
     a = getRandomIntInclusive(0, productsArray.length - 1);
@@ -64,7 +64,7 @@ function drawTable() {
   data.addColumn('string', 'Recommended?');
   for (var i = 0; i < productsArray.length; i++) {
     var recommended = 'No';
-    if ((productsArray[i].tally / productsArray[i].views) >= 0.35) {
+    if ((productsArray[i].tally / productsArray[i].views) > 0.34) {
       recommended = 'YES';
     }
     rowData[i] = [productsArray[i].name.split('.')[0], productsArray[i].tally, productsArray[i].views, (productsArray[i].tally / productsArray[i].views), recommended];
@@ -154,7 +154,8 @@ function onClick(e) {
 
   }
   if (totalClicks >= clicksAllowed) {
-    console.log(clicksAllowed + ' data points aquired.');
+    console.log(clicksAllowed + ' data points acquired.');
+    alert('Thank you for your participation!  Please leave the computer terminal and head to the reception desk to collect your payment!');
     container.removeEventListener('click', onClick);
     displayResultsBtn.setAttribute('class', 'visible');
     return;
