@@ -112,7 +112,7 @@ function printResultsChart() {
         yAxes: [{
           ticks: {
             min: 0,
-            stepSize: 10
+          //  stepSize: 10
           }
         }]
       }
